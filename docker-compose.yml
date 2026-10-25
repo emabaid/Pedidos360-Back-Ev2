@@ -1,0 +1,19 @@
+# RabbitMQ local para desarrollo (Docker Desktop).
+#   Copia .env.example a .env y ajusta la clave.   Levantar:  docker compose up -d
+#   Panel web: http://localhost:15672
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: pedidos360-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER:-pedidos360}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD:?define RABBIT_PASSWORD en .env}
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit vm_memory_high_watermark 0.4"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+volumes:
+  rabbitmq-data:

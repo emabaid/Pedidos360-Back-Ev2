@@ -1,0 +1,45 @@
+# Perfil por defecto: H2 en archivo (local). En la EC2 usar SPRING_PROFILES_ACTIVE=mysql
+server:
+  port: 8082
+
+spring:
+  application:
+    name: ms-pedidos360-catalog
+
+  datasource:
+    url: jdbc:h2:file:./data/catalog-db;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASSWORD:guest}
+    connection-timeout: 3000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    # sin esto data.sql se ejecuta antes de que Hibernate cree la tabla PRODUCTS y falla
+    defer-datasource-initialization: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  sql:
+    init:
+      mode: always
+
+pedidos360:
+  stock:
+    umbral-bajo: 5
+
+logging:
+  level:
+    abaid.pedidos360.catalog: INFO

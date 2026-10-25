@@ -1,0 +1,37 @@
+server:
+  port: 8083
+  tomcat:
+    threads:
+      max: 20
+
+spring:
+  application:
+    name: ms-pedidos360-notifications
+
+  datasource:
+    url: jdbc:h2:file:./data/notifications-db;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USER:guest}
+    password: ${RABBIT_PASSWORD:guest}
+    connection-timeout: 3000
+
+logging:
+  level:
+    abaid.pedidos360.notifications: INFO

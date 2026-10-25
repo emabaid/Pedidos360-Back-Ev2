@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ms-pedidos360-bff
+
+pedidos360:
+  entra:
+    # el manifest de la API tiene requestedAccessTokenVersion = 2, por eso la URL termina en /v2.0
+    issuer-uri: https://login.microsoftonline.com/a018a64b-37c3-42b0-a7b2-a6e50b7330a5/v2.0
+    # el campo "aud" del token trae el Client ID de la API (sin api://...)
+    audience: "b1cb0637-0a06-45da-9404-4136890f007a"
+
+  cors:
+    # paginas que pueden llamar al BFF (separadas por coma). Local + la direccion del frontend en la EC2
+    allowed-origins: http://localhost:4200
+
+  catalog-base-url: http://localhost:8082
+  orders-base-url: http://localhost:8081
+  notifications-base-url: http://localhost:8083
+  rabbit-admin-base-url: http://localhost:8084
+
+logging:
+  level:
+    org.springframework.security: INFO
+    abaid.pedidos360.bff: INFO
